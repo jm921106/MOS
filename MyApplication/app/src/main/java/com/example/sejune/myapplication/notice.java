@@ -1,0 +1,17 @@
+package com.example.sejune.myapplication;
+
+import android.app.Activity;
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+/**
+ * Created by SE JUNE on 2016-06-27.
+ */
+public class notice extends Fragment {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.mos_notice, container, false);
+    }
+}
