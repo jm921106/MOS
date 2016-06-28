@@ -1,2 +1,0 @@
-# MOS
-management of staffs
