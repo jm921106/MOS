@@ -1,8 +1,8 @@
 package com.example.sejune.myapplication;
 
-import android.app.Activity;
-import android.os.Bundle;
-import android.os.Handler;
+        import android.app.Activity;
+        import android.os.Bundle;
+        import android.os.Handler;
 
 /**
  * Created by SE JUNE on 2016-06-27.
@@ -19,6 +19,6 @@ public class splash extends Activity {
             public void run() {
                 finish();
             }
-        }, 3000);
+         }, 500);
     }
 }

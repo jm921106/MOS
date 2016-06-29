@@ -1,8 +1,10 @@
 package com.example.sejune.myapplication;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
 
 /**
  * Created by SE JUNE on 2016-06-28.
@@ -13,13 +15,14 @@ public class dataBase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        //계정 테이블 생성 ( ID, PW, NAME, TYPE )
-        String sql = "CREATE TABLE accountTBL ( ID CHAR(20) PRIMARY KEY, PW CHAR(20), NAME CHAR(20), TYPE INTEGER);";
+   public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
+        //계좌 테이블 생성
+        String sql = "CREATE TABLE accountTBL ( EMAIL TEXT PRIMARY KEY, PW TEXT, NAME TEXT, TYPE TEXT);";
         sqLiteDatabase.execSQL(sql);
 
-        //가게 테이블 생성 ( 가게이름, 관리자, 전화번호, 주소)
-        sql = "CREATE TABLE storeTBL ( NAME CHAR(20) PRIMARY KEY, ADMIN CHAR(20), PHONE INTEGER, ADDRESS CHAR(20) );";
+        //가게 테이블 생성
+        sql = "CREATE TABLE storeTBL (storeINDEX TEXT, NAME TEXT, ADMIN TEXT, PHONE TEXT, ADDRESS TEXT);";
         sqLiteDatabase.execSQL(sql);
 
         //스태프 생성 ( 키용 인덱스, 사용자 아이디, 가게 이름 )
@@ -59,5 +62,33 @@ public class dataBase extends SQLiteOpenHelper {
 
         //초기화
         onCreate(sqLiteDatabase);
+    }
+
+    public void insert(String _query) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(_query);
+        db.close();
+
+    }
+
+    public void update(String _query) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(_query);
+        db.close();
+    }
+
+    public void delete(String _query) {
+        SQLiteDatabase db = getWritableDatabase();
+        db.execSQL(_query);
+        db.close();
+    }
+
+    public Cursor select(String _query) {
+
+        SQLiteDatabase db = getReadableDatabase();
+
+        Cursor cursor = db.rawQuery(_query, null);
+
+        return cursor;
     }
 }

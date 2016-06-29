@@ -2,6 +2,7 @@ package com.example.sejune.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -18,6 +19,9 @@ public class MainActivity extends Activity {
     Button login_login;
     TextView login_newAccount, login_forgetPW;
 
+    //디비객체생성
+    final dataBase dbManager = new dataBase(this);
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,19 +33,32 @@ public class MainActivity extends Activity {
         login_login = (Button) findViewById(R.id.login_login);
         login_newAccount = (TextView) findViewById(R.id.login_newAccount);
         login_forgetPW = (TextView) findViewById(R.id.login_forgetPW);
+        try {
+            dbManager.insert("INSERT INTO accountTBL VALUES('ab', 'ab', 'ab', '0');");
+            Toast.makeText(getApplicationContext(), "insert ok", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "error!", Toast.LENGTH_SHORT).show();
+        }
+
 
         /*
         dataBase db = new dataBase(this);       //디비 변수
         sqlDB = db.getReadableDatabase();
         */
 
-
         //로그인 버튼
         login_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+                //go to SelectStore
+                Intent intent = new Intent(getApplicationContext(), selectStore.class);
+
+                //go to Base
+                //Intent intent = new Intent(getApplicationContext(), Base.class);
+                startActivity(intent);
                 //Intent intent = new Intent(getApplicationContext(), selectStore.class);
+                /*
                 class_Login login = new class_Login();
                 String ID = login_email.getText().toString();
                 int key = login.login(ID, login_pwd.getText().toString());
@@ -58,6 +75,7 @@ public class MainActivity extends Activity {
                         Toast.makeText(getApplicationContext(), "존재하지 않는 계정입니다.", Toast.LENGTH_SHORT).show();
                         break;
                 }
+                */
             }
         });
 
