@@ -19,6 +19,9 @@ public class MainActivity extends Activity {
     Button login_login;
     TextView login_newAccount, login_forgetPW;
 
+    //DB
+    SQLiteDatabase sqlDB;
+
     //디비객체생성
     final dataBase dbManager = new dataBase(this);
 
@@ -80,31 +83,27 @@ public class MainActivity extends Activity {
         login_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            //go to SelectStore
-            Intent intent = new Intent(getApplicationContext(), selectStore.class);
+                final dataBase db = new dataBase(getApplicationContext());       //디비 변수
+                sqlDB = db.getReadableDatabase();
+                final String sql = "SELECT * FROM accountTBL WHERE EMAIL ='" + login_email.getText().toString() + "';";
+                Cursor cursor = db.select(sql);
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(1).equals(login_pwd.getText().toString())) {
+                        String name = cursor.getString(2);
+                        Toast.makeText(getApplicationContext(), name + " 님 환영합니다!", Toast.LENGTH_SHORT).show();
 
-            //go to Base
-            //Intent intent = new Intent(getApplicationContext(), Base.class);
-            startActivity(intent);
-            //Intent intent = new Intent(getApplicationContext(), selectStore.class);
-            /*
-            class_Login login = new class_Login();
-            String ID = login_email.getText().toString();
-            int key = login.login(ID, login_pwd.getText().toString());
-            switch(key){
-                case 0:
-                    Toast.makeText(getApplicationContext(),"" + ID + " 님 환영합니다!", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), Base.class);
-                    startActivity(intent);
-                    break;
-                case 1:
-                    Toast.makeText(getApplicationContext(), "비밀번호를 다시 확인해 주세요.", Toast.LENGTH_SHORT).show();
-                    break;
-                case 2:
-                    Toast.makeText(getApplicationContext(), "존재하지 않는 계정입니다.", Toast.LENGTH_SHORT).show();
-                    break;
-            }
-            */
+                        //초기화
+                        login_email.setText("");
+                        login_pwd.setText("");
+
+                        Intent intent = new Intent(getApplicationContext(), selectStore.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if(cursor.getCount()==0)    Toast.makeText(getApplicationContext(), "계정이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
