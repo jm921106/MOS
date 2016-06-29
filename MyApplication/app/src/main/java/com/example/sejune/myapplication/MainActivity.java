@@ -2,6 +2,7 @@ package com.example.sejune.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
     //Login 변수
@@ -20,6 +22,9 @@ public class MainActivity extends Activity {
 
     //ID와 비밀번호.
     String id, pwd;
+
+    //디비객체생성
+    final dataBase dbManager = new dataBase(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,19 +37,30 @@ public class MainActivity extends Activity {
         login_login = (Button) findViewById(R.id.login_login);
         login_newAccount = (TextView) findViewById(R.id.login_newAccount);
         login_forgetPW = (TextView) findViewById(R.id.login_forgetPW);
+        try {
+            dbManager.insert("INSERT INTO accountTBL VALUES('ab', 'ab', 'ab', '0');");
+            Toast.makeText(getApplicationContext(), "insert ok", Toast.LENGTH_SHORT).show();
+        } catch (Exception e) {
+            Toast.makeText(getApplicationContext(), "error!", Toast.LENGTH_SHORT).show();
+        }
+
 
         /*
         dataBase db = new dataBase(this);       //디비 변수
         sqlDB = db.getReadableDatabase();
         */
 
-
         //로그인 버튼
         login_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
+
+                //go to SelectStore
                 Intent intent = new Intent(getApplicationContext(), selectStore.class);
+
+                //go to Base
+                //Intent intent = new Intent(getApplicationContext(), Base.class);
                 startActivity(intent);
             }
         });
