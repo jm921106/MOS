@@ -15,13 +15,14 @@ public class dataBase extends SQLiteOpenHelper {
     }
 
     @Override
-    public void onCreate(SQLiteDatabase sqLiteDatabase) {
+   public void onCreate(SQLiteDatabase sqLiteDatabase) {
+
         //계좌 테이블 생성
         String sql = "CREATE TABLE accountTBL ( EMAIL TEXT PRIMARY KEY, PW TEXT, NAME TEXT, TYPE INTEGER);";
         sqLiteDatabase.execSQL(sql);
 
         //가게 테이블 생성
-         sql = "CREATE TABLE storeTBL (storeINDEX INTEGER PRIMARY KEY, storeNAME TEXT, storeADMIN TEXT, storePHONE TEXT, storeADDR TEXT);";
+        sql = "CREATE TABLE storeTBL (storeINDEX INTEGER PRIMARY KEY, storeNAME TEXT, storeADMIN TEXT, storePHONE TEXT, storeADDR TEXT);";
         sqLiteDatabase.execSQL(sql);
 
         //스태프 생성

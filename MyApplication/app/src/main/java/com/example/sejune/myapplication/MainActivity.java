@@ -18,10 +18,9 @@ public class MainActivity extends Activity {
     EditText login_email, login_pwd;
     Button login_login;
     TextView login_newAccount, login_forgetPW;
-    SQLiteDatabase sqlDB;
 
-    //ID와 비밀번호.
-    String id, pwd;
+    //DB
+    SQLiteDatabase sqlDB;
 
     //디비객체생성
     final dataBase dbManager = new dataBase(this);
@@ -37,12 +36,6 @@ public class MainActivity extends Activity {
         login_login = (Button) findViewById(R.id.login_login);
         login_newAccount = (TextView) findViewById(R.id.login_newAccount);
         login_forgetPW = (TextView) findViewById(R.id.login_forgetPW);
-
-
-
-
-
-
 
 
         try {
@@ -86,33 +79,31 @@ public class MainActivity extends Activity {
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         //로그인 버튼
         login_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //go to SelectStore
-                Intent intent = new Intent(getApplicationContext(), selectStore.class);
+                final dataBase db = new dataBase(getApplicationContext());       //디비 변수
+                sqlDB = db.getReadableDatabase();
+                final String sql = "SELECT * FROM accountTBL WHERE EMAIL ='" + login_email.getText().toString() + "';";
+                Cursor cursor = db.select(sql);
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(1).equals(login_pwd.getText().toString())) {
+                        String name = cursor.getString(2);
+                        Toast.makeText(getApplicationContext(), name + " 님 환영합니다!", Toast.LENGTH_SHORT).show();
 
-                //go to Base
-                //Intent intent = new Intent(getApplicationContext(), Base.class);
-                startActivity(intent);
+                        //초기화
+                        login_email.setText("");
+                        login_pwd.setText("");
+
+                        Intent intent = new Intent(getApplicationContext(), selectStore.class);
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if(cursor.getCount()==0)    Toast.makeText(getApplicationContext(), "계정이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
             }
         });
 
