@@ -11,13 +11,9 @@ import android.view.ViewGroup;
 /**
  * Created by SE JUNE on 2016-06-28.
  */
-public class storeInfo extends AppCompatActivity {
+public class storeInfo extends Fragment {
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-
         return inflater.inflate(R.layout.mos_storeinfo, container, false);
     }
-
 }
