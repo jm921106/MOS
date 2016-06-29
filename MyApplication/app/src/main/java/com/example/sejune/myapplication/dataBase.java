@@ -18,23 +18,23 @@ public class dataBase extends SQLiteOpenHelper {
    public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         //계좌 테이블 생성
-        String sql = "CREATE TABLE accountTBL ( EMAIL TEXT PRIMARY KEY, PW TEXT, NAME TEXT, TYPE TEXT);";
+        String sql = "CREATE TABLE accountTBL ( EMAIL TEXT PRIMARY KEY, PW TEXT, NAME TEXT, TYPE INTEGER);";
         sqLiteDatabase.execSQL(sql);
 
         //가게 테이블 생성
-        sql = "CREATE TABLE storeTBL (storeINDEX TEXT, NAME TEXT, ADMIN TEXT, PHONE TEXT, ADDRESS TEXT);";
+        sql = "CREATE TABLE storeTBL (storeINDEX INTEGER PRIMARY KEY, storeNAME TEXT, storeADMIN TEXT, storePHONE TEXT, storeADDR TEXT);";
         sqLiteDatabase.execSQL(sql);
 
-        //스태프 생성 ( 키용 인덱스, 사용자 아이디, 가게 이름 )
-        sql = "CREATE TABLE staffTBL (INDEX INTEGER PRIMARY KEY,  ID CHAR(20), NAME CHAR(20));";
+        //스태프 생성
+        sql = "CREATE TABLE staffTBL (staffINDEX INTEGER,  staffEMAIL TEXT, storeNAME TEXT);";
         sqLiteDatabase.execSQL(sql);
 
-        //스케쥴 테이블 생성 ( 날짜시간, 스케쥴 내용, 작성자 )
-        sql = "CREATE TABLE scheduleTBL (DATE CHAR(20) PRIMARY KEY, TEXT CHAR(20), FROM CHAR(20));";
+        //스케쥴 테이블 생성
+        sql = "CREATE TABLE scheduleTBL (scheduleDATE DATE PRIMARY KEY, scheduleTEXT TEXT, EMAIL CHAR(20));";
         sqLiteDatabase.execSQL(sql);
 
-        //메세지 테이블 생성 ( 키용 인덱스, 보내는 사람, 받는 사람, 메시지 )
-        sql = "CREATE TABLE messageTBL (INDEX INTEGER PRIMARY KEY,  FROM CHAR(20), TO CHAR(20), TEXT CHAR(20));";
+        //메세지 테이블 생성
+        sql = "CREATE TABLE messageTBL (messageINDEX INTEGER PRIMARY KEY,  fromEMAIL TEXT, toEMAIL TEXT, messageTEXT TEXT);";
         sqLiteDatabase.execSQL(sql);
     }
 
@@ -84,11 +84,8 @@ public class dataBase extends SQLiteOpenHelper {
     }
 
     public Cursor select(String _query) {
-
         SQLiteDatabase db = getReadableDatabase();
-
         Cursor cursor = db.rawQuery(_query, null);
-
         return cursor;
     }
 }
