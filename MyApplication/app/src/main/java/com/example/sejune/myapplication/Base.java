@@ -26,10 +26,8 @@ public class Base extends Activity {
     Fragment frag1, frag2, frag3; //3개의 Fragment 참조변수
 
     Bundle args = new Bundle();
-    String email;
-    int userType;
-    String storeName;
-    int storeID;
+    String storeName, email, name;
+    int storeID, userType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,20 +40,15 @@ public class Base extends Activity {
         userType = intent.getIntExtra("UserType", 2);
         storeName = intent.getStringExtra("storeNAME");
         storeID = intent.getIntExtra("StoreID", -1);
-
-        //intent test toast
-        String test = "userEMail : "+ email + "\n"
-                + "userType : " + String.valueOf(userType) +  "\n"
-                + "storeID : " + String.valueOf(storeID);
-        Toast.makeText(getApplicationContext(), test, Toast.LENGTH_SHORT).show();
-
+        name = intent.getStringExtra("NAME");
 
         args.putString("EMAIL", email);
         args.putInt("UserType", userType);
         args.putInt("StoreID", storeID);
         args.putString("StoreName", storeName);
+        args.putString("NAME", name);
 
-        manager= (FragmentManager)getFragmentManager();
+        manager = (FragmentManager) getFragmentManager();
 
         frag1 = new Fragment_1();
         frag1.setArguments(args);
@@ -77,12 +70,6 @@ public class Base extends Activity {
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Fragment fr = null;
 
-            Bundle args = new Bundle();
-            args.putString("EMAIL", email);
-            args.putInt("UserType", userType);
-            args.putInt("StoreID", storeID);
-            args.putString("StoreName", storeName);
-
             if (i == 0) {                   // 가게정보
                 fr = new storeInfo();
 
@@ -93,7 +80,7 @@ public class Base extends Activity {
                 fr = new message();
 
             } else if (i == 3) {        // 공지
-               fr = new notice();
+                fr = new notice();
 
             }
 
@@ -107,19 +94,19 @@ public class Base extends Activity {
 
     //Activity가 보여주는 activity_main.xml 파일에 태그문으로
     //onClick속성이 설정된 View를 클릭했을 때 자동으로 호출되는 콜백 메소드
-    public void mOnClick(View v){
-        switch( v.getId() ){
+    public void mOnClick(View v) {
+        switch (v.getId()) {
             case R.id.btn01:
 
                 //fragment_analog.xml을 보여주는 AnalogFragment 객체로 재배치(replace)
-                tran= manager.beginTransaction();
+                tran = manager.beginTransaction();
                 tran.replace(R.id.container, frag1);
                 tran.commit();
                 break;
 
             case R.id.btn02:
                 //fragment_digital.xml을 보여주는 DigitalFragment 객체로 재배치(replace)
-                tran= manager.beginTransaction();
+                tran = manager.beginTransaction();
                 tran.replace(R.id.container, frag2);
                 tran.commit();
                 break;
@@ -127,7 +114,7 @@ public class Base extends Activity {
             case R.id.btn03:
 
                 //fragment_calendar.xml을 보여주는 CalendarFragment 객체로 재배치(replace)
-                tran= manager.beginTransaction();
+                tran = manager.beginTransaction();
                 tran.replace(R.id.container, frag3);
                 tran.commit();
                 break;

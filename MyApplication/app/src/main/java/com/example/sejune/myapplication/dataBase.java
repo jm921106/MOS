@@ -30,11 +30,15 @@ public class dataBase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql);
 
         //스케쥴 테이블 생성
-        sql = "CREATE TABLE scheduleTBL (scheduleDATE TEXT PRIMARY KEY, scheduleTEXT TEXT, EMAIL CHAR(20));";
+        sql = "CREATE TABLE scheduleTBL (scheduleDATE TEXT PRIMARY KEY, scheduleTEXT TEXT, EMAIL CHAR(20), name CHAR(20));";
         sqLiteDatabase.execSQL(sql);
 
         //메세지 테이블 생성
         sql = "CREATE TABLE messageTBL (messageINDEX INTEGER PRIMARY KEY, storeINDEX INTEGER,  fromEMAIL TEXT, toEMAIL TEXT, messageTEXT TEXT);";
+        sqLiteDatabase.execSQL(sql);
+
+        //공지 테이블 생성
+        sql = "CREATE TABLE noticeTBL (noticeINDEX INTEGER PRIMARY KEY, storeINDEX INTEGER, noticeDATE TEXT, noticeFROM TEXT, title TEXT, notice TEXT);";
         sqLiteDatabase.execSQL(sql);
     }
 
@@ -58,6 +62,10 @@ public class dataBase extends SQLiteOpenHelper {
 
         //메세지
         sql = "DROP TABLE IF EXISTS messageTBL";
+        sqLiteDatabase.execSQL(sql);
+
+        //공지
+        sql = "DROP TABLE IF EXISTS noticeTBL";
         sqLiteDatabase.execSQL(sql);
 
         //초기화

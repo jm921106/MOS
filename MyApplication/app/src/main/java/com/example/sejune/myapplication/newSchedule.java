@@ -28,6 +28,7 @@ public class newSchedule extends Activity {
         Intent intent = getIntent();
         final String email =intent.getStringExtra("EMAIL");
         final String date = intent.getStringExtra("DATE");
+        final String name = intent.getStringExtra("NAME");
 
         newSchedule_back = (ImageView)findViewById(R.id.newSchedule_back);
         newSchedule_text = (EditText)findViewById(R.id.newSchedule_text);
@@ -52,7 +53,8 @@ public class newSchedule extends Activity {
                     String sql = "INSERT INTO scheduleTBL VALUES( '"
                             + date +"', '"
                             + newSchedule_text.getText().toString() + "', '"
-                            + email + "');";
+                            + email + "', '"
+                            + name + "');";
                     db.insert(sql);
                     finish();
                 }

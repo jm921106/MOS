@@ -31,11 +31,6 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, splash.class));
         setContentView(R.layout.mos_login);
 
-        login_email = (EditText) findViewById(R.id.login_email);
-        login_pwd = (EditText) findViewById(R.id.login_pwd);
-        login_login = (Button) findViewById(R.id.login_login);
-        login_newAccount = (TextView) findViewById(R.id.login_newAccount);
-        login_forgetPW = (TextView) findViewById(R.id.login_forgetPW);
 
         try {
             SQLiteDatabase db = dbManager.getWritableDatabase();
@@ -86,12 +81,17 @@ public class MainActivity extends Activity {
             dbManager.insert("INSERT INTO messageTBL VALUES(9, 0, 'email3', 'email1', 'go to hell');");
 
             Toast.makeText(getApplicationContext(), "insert ok", Toast.LENGTH_SHORT).show();
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             Toast.makeText(getApplicationContext(), "error!", Toast.LENGTH_SHORT).show();
         }
 
 
-
+        login_email = (EditText) findViewById(R.id.login_email);
+        login_pwd = (EditText) findViewById(R.id.login_pwd);
+        login_login = (Button) findViewById(R.id.login_login);
+        login_newAccount = (TextView) findViewById(R.id.login_newAccount);
+        login_forgetPW = (TextView) findViewById(R.id.login_forgetPW);
 
         //로그인 버튼
         login_login.setOnClickListener(new View.OnClickListener() {
@@ -104,7 +104,7 @@ public class MainActivity extends Activity {
                 while (cursor.moveToNext()) {
                     if (cursor.getString(1).equals(login_pwd.getText().toString())) {
                         String name = cursor.getString(2);
-                        int type = cursor.getInt(0);
+                        int type = cursor.getInt(3);
                         Toast.makeText(getApplicationContext(), name + " 님 환영합니다!", Toast.LENGTH_SHORT).show();
 
                         Intent intent = new Intent(getApplicationContext(), selectStore.class);
