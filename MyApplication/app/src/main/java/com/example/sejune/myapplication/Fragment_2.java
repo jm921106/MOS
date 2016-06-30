@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 
 public class Fragment_2 extends Fragment {
@@ -31,11 +34,17 @@ public class Fragment_2 extends Fragment {
         //매개변수로 전달된 LayoutInflater객체를 통해 fragment_analog.xml 레이아웃 파일을
         //View 객체로 생성
         view= inflater.inflate(R.layout.mos_storeinfo_frag_2, null);
+        TextView txtStaffInfo = (TextView) view.findViewById(R.id.txtStaffInfo);
 
         final dataBase dbManager = new dataBase(view.getContext());
+
+        ArrayList<String> staffEmail = new ArrayList<>();
+
         Cursor cursor = dbManager.select("SELECT * FROM staffTBL WHERE storeINDEX = "+ storeID +";");
         while(cursor.moveToNext()) {
+            staffEmail.add(cursor.getString(2));
 
+            txtStaffInfo.setText(txtStaffInfo.getText() + "\n" + cursor.getString(2));
         }
 
         //생성된 View 객체를 리턴

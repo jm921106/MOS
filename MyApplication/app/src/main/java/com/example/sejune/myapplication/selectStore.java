@@ -59,7 +59,7 @@ public class selectStore extends Activity {
         Cursor cursor = dbManager.select("SELECT * FROM staffTBL WHERE staffEMAIL = '" + userEmail + "';");
 
         while (cursor.moveToNext()) {
-            storeNameList.add(cursor.getString(2));
+            storeNameList.add(cursor.getString(3));
             storeIndexList.add(cursor.getInt(0));
         }
 
