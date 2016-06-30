@@ -40,14 +40,42 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:gravity="right"
         android:orientation="horizontal">
 
-        <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_margin="5dp"
-            android:src="@drawable/mos_pencil" />
+        <Button
+            android:id="@+id/btn01"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="StoreInfo"
+            android:textSize="12sp"
+            android:onClick="mOnClick"/>
+
+        <Button
+            android:id="@+id/btn02"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="StaffInfo"
+            android:textSize="12sp"
+            android:onClick="mOnClick"/>
+
+        <Button android:id="@+id/btn03"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="setting"
+            android:textSize="12sp"
+            android:onClick="mOnClick"/>
+
     </LinearLayout>
+
+    <LinearLayout android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="8dp" >
+
+    </LinearLayout>
+
 </LinearLayout>

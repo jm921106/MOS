@@ -25,15 +25,12 @@ import java.util.ArrayList;
 
 
 public class selectStore extends Activity {
-    SQLiteDatabase sqlDB;
 
     Button selectStore_logOut;
     ImageView selectStore_add;
     ListView selectStore_list;
 
-
     final dataBase dbManager = new dataBase(this);
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,25 +54,31 @@ public class selectStore extends Activity {
             }
         });
 
-        //userEmail 가져와서 staff의 가게명을 찾는다.
-        final ArrayList<String> storeList = new ArrayList<String>();
+        final ArrayList<String> storeNameList = new ArrayList<String>();
+        final ArrayList<Integer> storeIndexList = new ArrayList<Integer>();
         Cursor cursor = dbManager.select("SELECT * FROM staffTBL WHERE staffEMAIL = '" + userEmail + "';");
 
         while (cursor.moveToNext()) {
-            storeList.add(cursor.getString(3));
+            storeNameList.add(cursor.getString(3));
+            storeIndexList.add(cursor.getInt(0));
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, storeList);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, storeNameList);
         selectStore_list.setAdapter(adapter);
         adapter.notifyDataSetChanged();
 
         selectStore_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String storeName = storeList.get(i);
+
+                int storeID = storeIndexList.get(i);
+                String storeName = storeNameList.get(i);
                 Intent intent = new Intent(getApplicationContext(), Base.class);
                 intent.putExtra("EMAIL", userEmail);
+                intent.putExtra("UserType", userType);
+                intent.putExtra("StoreID", storeID);
                 intent.putExtra("storeNAME", storeName);
+
                 startActivity(intent);
             }
         });
@@ -111,7 +114,6 @@ public class selectStore extends Activity {
                 startActivity(intent);
             }
         });
-
 
     }
 }
