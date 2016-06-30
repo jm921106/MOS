@@ -47,7 +47,6 @@ public class newSchedule extends Activity {
                     Toast.makeText(getApplicationContext(), "스케쥴을 입력해 주세요", Toast.LENGTH_SHORT).show();
                 }else{
                     //입력을 받음.
-
                     dataBase db = new dataBase(getApplicationContext());       //디비 변수
                     sqlDB = db.getWritableDatabase();
                     String sql = "INSERT INTO scheduleTBL VALUES( '"

@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import static android.icu.util.Calendar.*;
+
 /**
  * Created by SE JUNE on 2016-06-27.
  */
@@ -26,13 +28,12 @@ public class schedule extends Fragment {
     CalendarView schedule_calendar;
     ListView schedule_list;
 
-    String email;
     String date;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.mos_schedule, container,false);
+        final View view = inflater.inflate(R.layout.mos_schedule, container,false);
 
         Bundle bundle = getArguments();
-        email = bundle.getString("EMAIL");
+        final String email = bundle.getString("EMAIL");
 
         schedule_add = (ImageView)view.findViewById(R.id.schedule_add);
         schedule_notice = (TextView)view.findViewById(R.id.schedule_notice);
@@ -42,19 +43,18 @@ public class schedule extends Fragment {
         schedule_calendar.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
             public void onSelectedDayChange(CalendarView calendarView, int i, int i1, int i2) {
-                java.util.Calendar diaryCal = java.util.Calendar.getInstance();
-                diaryCal.setTimeInMillis(schedule_calendar.getDate());
+                java.util.Calendar Cal = java.util.Calendar.getInstance();
+                Cal.setTimeInMillis(calendarView.getDate());
                 //달력에 선택된 날짜 셋팅.
-                date = Integer.toString(diaryCal.get(java.util.Calendar.YEAR)) + "_"
-                        + Integer.toString(diaryCal.get(java.util.Calendar.MONTH) + 1) + "_"
-                        + Integer.toString(diaryCal.get(java.util.Calendar.DATE));
+                date = i + "_" + (i1 + 1) + "_" + i2;
             }
         });
+
         schedule_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(view.getContext(), newSchedule.class);
-                intent.putExtra("EMAIl", email);
+                intent.putExtra("EMAIL", email);
                 intent.putExtra("DATE", date);
                 startActivity(intent);
             }

@@ -53,8 +53,8 @@ public class MainActivity extends Activity {
 
                         Intent intent = new Intent(getApplicationContext(), selectStore.class);
                         intent.putExtra("EMAIL", login_email.getText().toString());        // ID정보
-                        intent.putExtra("NAME", name);                                              // 이름
-                        intent.putExtra("TYPE", type);                                                   // 직원 타입
+                        intent.putExtra("NAME", name);                                                     // 이름
+                        intent.putExtra("TYPE", type);                                                           // 직원 타입
 
                         //초기화
                         login_email.setText("");
