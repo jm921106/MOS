@@ -23,7 +23,7 @@ public class message extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
 
-        View view = inflater.inflate(R.layout.mos_message, null);
+        View view = inflater.inflate(R.layout.mos_message, container, false);
         final dataBase dbManager = new dataBase(view.getContext());
 
         ListView listMessage = (ListView) view.findViewById(R.id.listMessage);
@@ -54,8 +54,6 @@ public class message extends Fragment {
             @Override
             public void onClick(View view) {
 
-
-
                 Intent intent = new Intent(view.getContext(), newMessage.class);
 
                 intent.putExtra("EMAIL", userEmail);
@@ -63,9 +61,7 @@ public class message extends Fragment {
                 intent.putExtra("StoreName", storeName);
                 intent.putExtra("StoreID", storeID);
 
-                Toast.makeText(view.getContext(), userEmail + storeName + userType +  storeID, Toast.LENGTH_SHORT).show();
-
-//                startActivity(intent);
+                startActivity(intent);
             }
         });
 
