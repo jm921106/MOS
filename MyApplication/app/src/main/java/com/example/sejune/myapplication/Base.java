@@ -25,7 +25,11 @@ public class Base extends Activity {
     FragmentTransaction tran;  //실제로 Fragment를 추가/삭제/재배치 하는 클래스의 참조변수
     Fragment frag1, frag2, frag3; //3개의 Fragment 참조변수
 
+    Bundle args = new Bundle();
     String email;
+    int userType;
+    String storeName;
+    int storeID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +38,10 @@ public class Base extends Activity {
 
         Intent intent = getIntent();
 
-        String email = intent.getStringExtra("EMAIL");
-        int userType = intent.getIntExtra("UserType", 2);
-        String storeName = intent.getStringExtra("storeNAME");
-        int storeID = intent.getIntExtra("StoreID", -1);
-
+        email = intent.getStringExtra("EMAIL");
+        userType = intent.getIntExtra("UserType", 2);
+        storeName = intent.getStringExtra("storeNAME");
+        storeID = intent.getIntExtra("StoreID", -1);
 
         //intent test toast
         String test = "userEMail : "+ email + "\n"
@@ -46,10 +49,11 @@ public class Base extends Activity {
                 + "storeID : " + String.valueOf(storeID);
         Toast.makeText(getApplicationContext(), test, Toast.LENGTH_SHORT).show();
 
-        Bundle args = new Bundle();
+
         args.putString("EMAIL", email);
         args.putInt("UserType", userType);
         args.putInt("StoreID", storeID);
+        args.putString("StoreName", storeName);
 
         manager= (FragmentManager)getFragmentManager();
 
@@ -72,8 +76,13 @@ public class Base extends Activity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Fragment fr = null;
+
             Bundle args = new Bundle();
             args.putString("EMAIL", email);
+            args.putInt("UserType", userType);
+            args.putInt("StoreID", storeID);
+            args.putString("StoreName", storeName);
+
             if (i == 0) {                   // 가게정보
                 fr = new storeInfo();
 
@@ -83,10 +92,12 @@ public class Base extends Activity {
             } else if (i == 2) {        // 메세지
                 fr = new message();
 
+
             } else if (i == 3) {        // 공지
                fr = new notice();
 
             }
+
             fr.setArguments(args);
             android.app.FragmentManager fm = getFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
