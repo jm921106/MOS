@@ -76,10 +76,9 @@ public class MainActivity extends Activity {
 
             Toast.makeText(getApplicationContext(), "insert ok", Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
+            e.printStackTrace();
             Toast.makeText(getApplicationContext(), "error!", Toast.LENGTH_SHORT).show();
         }
-
-
 
 
         //로그인 버튼

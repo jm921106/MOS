@@ -36,6 +36,10 @@ public class dataBase extends SQLiteOpenHelper {
         //메세지 테이블 생성
         sql = "CREATE TABLE messageTBL (messageINDEX INTEGER PRIMARY KEY,  fromEMAIL TEXT, toEMAIL TEXT, messageTEXT TEXT);";
         sqLiteDatabase.execSQL(sql);
+
+        //공지 테이블 생성
+        sql = "CREATE TABLE noticeTBL (noticeINDEX INTEGER PRIMARY KEY, noticeDATE TEXT,  noticeFROM TEXT, Notice TEXT);";
+        sqLiteDatabase.execSQL(sql);
     }
 
     @Override
@@ -58,6 +62,10 @@ public class dataBase extends SQLiteOpenHelper {
 
         //메세지
         sql = "DROP TABLE IF EXISTS messageTBL";
+        sqLiteDatabase.execSQL(sql);
+
+        //공지
+        sql = "DROP TABLE IF EXISTS noticeTBL";
         sqLiteDatabase.execSQL(sql);
 
         //초기화
