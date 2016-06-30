@@ -92,7 +92,6 @@ public class Base extends Activity {
             } else if (i == 2) {        // 메세지
                 fr = new message();
 
-
             } else if (i == 3) {        // 공지
                fr = new notice();
 

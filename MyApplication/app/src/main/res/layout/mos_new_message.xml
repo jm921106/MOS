@@ -44,11 +44,12 @@
                 android:textSize="25dp" />
 
             <EditText
+                android:id="@+id/edtToEmail"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:hint="ID" />
+                android:hint="Email" />
         </LinearLayout>
 
         <LinearLayout
@@ -60,6 +61,7 @@
             android:orientation="vertical">
 
             <EditText
+                android:id="@+id/edtContent"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:hint="Text" />
@@ -70,6 +72,7 @@
             android:layout_height="wrap_content">
 
             <Button
+                android:id="@+id/btnSend"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="SEND"

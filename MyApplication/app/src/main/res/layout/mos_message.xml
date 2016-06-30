@@ -30,6 +30,7 @@
         android:orientation="vertical">
 
         <ListView
+            android:id="@+id/listMessage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
         </ListView>
@@ -39,7 +40,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right"
+        android:orientation="vertical"
         >
         <!--
                 <ImageView
