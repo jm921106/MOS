@@ -74,6 +74,7 @@ public class newStore extends Activity {
                             while(cursor.moveToNext()) {
                                 count++;
                             }
+                            cursor.close();
 
                             //가게정보 등록
                             dbManager.insert("INSERT INTO storeTBL VALUES("
@@ -81,8 +82,7 @@ public class newStore extends Activity {
                                     + newStore_name.getText().toString() +"', '"
                                     + newStore_admin.getText().toString()  +"', '"
                                     + newStore_phone.getText().toString() +"', '"
-                                    + newStore_address.getText().toString() +"') ");
-                            cursor.close();
+                                    + newStore_address.getText().toString() +"');");
 
                             //스태프 추가
                             dbManager.insert("INSERT INTO staffTBL VALUES("
@@ -90,7 +90,6 @@ public class newStore extends Activity {
                                     + count + ", '"
                                     + adminEmail +"', '"
                                     + newStore_name.getText().toString() +"');");
-                            cursor.close();
 
                             if(!adminEmail.equals(newStore_admin.getText().toString())){
                                 dbManager.insert("INSERT INTO staffTBL VALUES("
@@ -98,7 +97,6 @@ public class newStore extends Activity {
                                         + count + ", '"
                                         + newStore_admin.getText().toString() +"', '"
                                         + newStore_name.getText().toString() +"');");
-                                cursor.close();
 
                                 dbManager.update("UPDATE accountTBL SET TYPE= 1 WHERE EMAIL ='" + newStore_admin.getText().toString() +"';");
                             }

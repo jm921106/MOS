@@ -60,7 +60,7 @@ public class selectStore extends Activity {
 
         while (cursor.moveToNext()) {
             storeNameList.add(cursor.getString(3));
-            storeIndexList.add(cursor.getInt(0));
+            storeIndexList.add(cursor.getInt(1));
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, storeNameList);
@@ -78,7 +78,7 @@ public class selectStore extends Activity {
                 intent.putExtra("UserType", userType);
                 intent.putExtra("StoreID", storeID);
                 intent.putExtra("storeNAME", storeName);
-
+                intent.putExtra("NAME", name);
                 startActivity(intent);
             }
         });
