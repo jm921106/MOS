@@ -54,6 +54,17 @@ public class MainActivity extends Activity {
             dbManager.insert("INSERT INTO storeTBL VALUES(2, '빅뱅', '양현석', '113', 'YG');");
             dbManager.insert("INSERT INTO staffTBL VALUES(2, 2, 'email13', '빅뱅');");
 
+            dbManager.insert("INSERT INTO messageTBL VALUES(0, 0, 'email2', 'email1', '^^');");
+            dbManager.insert("INSERT INTO messageTBL VALUES(1, 0, 'email2', 'email1', 'mos member');");
+            dbManager.insert("INSERT INTO messageTBL VALUES(2, 0, 'email2', 'email1', 'good luck');");
+            dbManager.insert("INSERT INTO messageTBL VALUES(3, 0, 'email2', 'email1', 'hello ');");
+            dbManager.insert("INSERT INTO messageTBL VALUES(4, 0, 'email3', 'email1', 'bye bye');");
+            dbManager.insert("INSERT INTO messageTBL VALUES(5, 0, 'email3', 'email1', 'good bye');");
+            dbManager.insert("INSERT INTO messageTBL VALUES(6, 0, 'email3', 'email1', 'what the hell');");
+            dbManager.insert("INSERT INTO messageTBL VALUES(7, 0, 'email3', 'email1', 'come on');");
+            dbManager.insert("INSERT INTO messageTBL VALUES(8, 0, 'email2', 'email1', 'see you');");
+            dbManager.insert("INSERT INTO messageTBL VALUES(9, 0, 'email3', 'email1', 'go to hell');");
+
             Toast.makeText(getApplicationContext(), "insert ok", Toast.LENGTH_SHORT).show();
         } catch (Exception e)
         {

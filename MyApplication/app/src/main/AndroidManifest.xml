@@ -16,6 +16,7 @@
         <activity android:name=".Base"></activity>
         <activity android:name=".newSchedule"></activity>
         <activity android:name=".newNotice"></activity>
+        <activity android:name=".newMessage"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

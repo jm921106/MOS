@@ -34,7 +34,7 @@ public class dataBase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql);
 
         //메세지 테이블 생성
-        sql = "CREATE TABLE messageTBL (messageINDEX INTEGER PRIMARY KEY,  fromEMAIL TEXT, toEMAIL TEXT, messageTEXT TEXT);";
+        sql = "CREATE TABLE messageTBL (messageINDEX INTEGER PRIMARY KEY, storeINDEX INTEGER,  fromEMAIL TEXT, toEMAIL TEXT, messageTEXT TEXT);";
         sqLiteDatabase.execSQL(sql);
 
         //공지 테이블 생성
