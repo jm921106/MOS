@@ -13,7 +13,6 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/testBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="임시 버튼" />
@@ -39,6 +38,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/schedule_notice"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -49,6 +49,7 @@
         android:textSize="20dp" />
 
     <CalendarView
+        android:id="@+id/schedule_calendar"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="5"></CalendarView>
@@ -59,6 +60,7 @@
         android:layout_weight="3">
 
         <ListView
+            android:id="@+id/schedule_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"></ListView>
     </ScrollView>

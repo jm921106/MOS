@@ -1,6 +1,8 @@
 package com.example.sejune.myapplication;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -11,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.lang.reflect.Array;
@@ -22,10 +25,6 @@ import java.util.ArrayList;
 
 
 public class selectStore extends Activity {
-    //intent get data
-    final String userEmail = "email1";
-    final int userType = 0;
-
     SQLiteDatabase sqlDB;
 
     Button selectStore_logOut;
@@ -45,6 +44,12 @@ public class selectStore extends Activity {
         selectStore_add = (ImageView) findViewById(R.id.selectStore_add);
         selectStore_list = (ListView) findViewById(R.id.selectStore_list);
 
+        //로그인에서 데이터 전달
+        Intent intent = getIntent();
+        final String userEmail = intent.getStringExtra("EMAIL");
+        final int userType = intent.getIntExtra("TYPE", 2);
+        final String name = intent.getStringExtra("NAME");
+
         selectStore_logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -57,7 +62,7 @@ public class selectStore extends Activity {
         Cursor cursor = dbManager.select("SELECT * FROM staffTBL WHERE staffEMAIL = '" + userEmail + "';");
 
         while (cursor.moveToNext()) {
-            storeList.add(cursor.getString(2));
+            storeList.add(cursor.getString(3));
         }
 
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, storeList);
@@ -67,13 +72,36 @@ public class selectStore extends Activity {
         selectStore_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                String storeID = storeList.get(i);
+                String storeName = storeList.get(i);
                 Intent intent = new Intent(getApplicationContext(), Base.class);
-                //intent.putExtra("StoreID", storeID);
-                intent.putExtra("StoreID", storeID);
+                intent.putExtra("EMAIL", userEmail);
+                intent.putExtra("storeNAME", storeName);
                 startActivity(intent);
             }
         });
+
+        /*
+        selectStore_list.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                //클릭한 상점 이름를 가지고 옴
+                final String name = storeList.get(i).toString();
+                AlertDialog.Builder dlg = new AlertDialog.Builder(selectStore.this);
+                dlg.setTitle("Delete Store");
+                dlg.setMessage(name + "을 제거하시겠습니까 ? ");
+                dlg.setPositiveButton("제거", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dbManager.delete("DELETE FROM storeTBL WHERE storeNAME='" + name + "', storeADMIN = '" + "");
+                    }
+                });
+                dlg.setNegativeButton("취소", null);
+                dlg.show();
+
+                return false;
+            }
+        });
+        */
 
         selectStore_add.setOnClickListener(new View.OnClickListener() {
             @Override

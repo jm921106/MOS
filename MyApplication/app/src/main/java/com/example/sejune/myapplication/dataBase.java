@@ -26,11 +26,11 @@ public class dataBase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql);
 
         //스태프 생성
-        sql = "CREATE TABLE staffTBL (staffINDEX INTEGER,  staffEMAIL TEXT, storeNAME TEXT);";
+        sql = "CREATE TABLE staffTBL (staffINDEX INTEGER, storeINDEX INTEGER, staffEMAIL TEXT, storeNAME TEXT);";
         sqLiteDatabase.execSQL(sql);
 
         //스케쥴 테이블 생성
-        sql = "CREATE TABLE scheduleTBL (scheduleDATE DATE PRIMARY KEY, scheduleTEXT TEXT, EMAIL CHAR(20));";
+        sql = "CREATE TABLE scheduleTBL (scheduleDATE TEXT PRIMARY KEY, scheduleTEXT TEXT, EMAIL CHAR(20));";
         sqLiteDatabase.execSQL(sql);
 
         //메세지 테이블 생성
