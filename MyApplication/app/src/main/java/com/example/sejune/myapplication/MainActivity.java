@@ -37,6 +37,59 @@ public class MainActivity extends Activity {
         login_newAccount = (TextView) findViewById(R.id.login_newAccount);
         login_forgetPW = (TextView) findViewById(R.id.login_forgetPW);
 
+        //로그인 버튼
+        login_login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final dataBase db = new dataBase(getApplicationContext());       //디비 변수
+                sqlDB = db.getReadableDatabase();
+                final String sql = "SELECT * FROM accountTBL WHERE EMAIL ='" + login_email.getText().toString() + "';";
+                Cursor cursor = db.select(sql);
+                while (cursor.moveToNext()) {
+                    if (cursor.getString(1).equals(login_pwd.getText().toString())) {
+                        String name = cursor.getString(2);
+                        int type = cursor.getInt(0);
+                        Toast.makeText(getApplicationContext(), name + " 님 환영합니다!", Toast.LENGTH_SHORT).show();
+
+                        Intent intent = new Intent(getApplicationContext(), selectStore.class);
+                        intent.putExtra("EMAIL", login_email.getText().toString());        // ID정보
+                        intent.putExtra("NAME", name);                                              // 이름
+                        intent.putExtra("TYPE", type);                                                   // 직원 타입
+
+                        //초기화
+                        login_email.setText("");
+                        login_pwd.setText("");
+
+                        startActivity(intent);
+                    }else{
+                        Toast.makeText(getApplicationContext(), "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                if(cursor.getCount()==0)    Toast.makeText(getApplicationContext(), "계정이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        //신규 계정
+        login_newAccount.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), newAccount.class);
+                startActivity(intent);
+            }
+        });
+
+        //비밀번호 찾기
+        login_forgetPW.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(getApplicationContext(), forgetPW.class));
+            }
+        });
+    }
+}
+
+/*
 
         try {
             SQLiteDatabase db = dbManager.getWritableDatabase();
@@ -78,50 +131,4 @@ public class MainActivity extends Activity {
             Toast.makeText(getApplicationContext(), "error!", Toast.LENGTH_SHORT).show();
         }
 
-
-        //로그인 버튼
-        login_login.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final dataBase db = new dataBase(getApplicationContext());       //디비 변수
-                sqlDB = db.getReadableDatabase();
-                final String sql = "SELECT * FROM accountTBL WHERE EMAIL ='" + login_email.getText().toString() + "';";
-                Cursor cursor = db.select(sql);
-                while (cursor.moveToNext()) {
-                    if (cursor.getString(1).equals(login_pwd.getText().toString())) {
-                        String name = cursor.getString(2);
-                        Toast.makeText(getApplicationContext(), name + " 님 환영합니다!", Toast.LENGTH_SHORT).show();
-
-                        //초기화
-                        login_email.setText("");
-                        login_pwd.setText("");
-
-                        Intent intent = new Intent(getApplicationContext(), selectStore.class);
-                        startActivity(intent);
-                    }else{
-                        Toast.makeText(getApplicationContext(), "비밀번호가 틀렸습니다.", Toast.LENGTH_SHORT).show();
-                    }
-                }
-
-                if(cursor.getCount()==0)    Toast.makeText(getApplicationContext(), "계정이 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        //신규 계정
-        login_newAccount.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), newAccount.class);
-                startActivity(intent);
-            }
-        });
-
-        //비밀번호 찾기
-        login_forgetPW.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), forgetPW.class));
-            }
-        });
-    }
-}
+ */

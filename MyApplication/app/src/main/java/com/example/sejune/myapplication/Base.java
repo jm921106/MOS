@@ -6,9 +6,6 @@ import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.ActionBarActivity;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -28,8 +25,7 @@ public class Base extends Activity {
     FragmentTransaction tran;  //실제로 Fragment를 추가/삭제/재배치 하는 클래스의 참조변수
     Fragment frag1, frag2, frag3; //3개의 Fragment 참조변수
 
-
-
+    String email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,17 +33,21 @@ public class Base extends Activity {
         setContentView(R.layout.mos_base);
 
         Intent intent = getIntent();
-        String userEmail = intent.getStringExtra("EMAIL");
+
+        String email = intent.getStringExtra("EMAIL");
         int userType = intent.getIntExtra("UserType", 2);
+        String storeName = intent.getStringExtra("storeNAME");
         int storeID = intent.getIntExtra("StoreID", -1);
 
-        String test = "userEMail : "+ userEmail + "\n"
+
+        //intent test toast
+        String test = "userEMail : "+ email + "\n"
                 + "userType : " + String.valueOf(userType) +  "\n"
                 + "storeID : " + String.valueOf(storeID);
         Toast.makeText(getApplicationContext(), test, Toast.LENGTH_SHORT).show();
 
         Bundle args = new Bundle();
-        args.putString("EMAIL", userEmail);
+        args.putString("EMAIL", email);
         args.putInt("UserType", userType);
         args.putInt("StoreID", storeID);
 
@@ -60,6 +60,7 @@ public class Base extends Activity {
         frag3 = new Fragment_3();
         frag3.setArguments(args);
 
+
         lvNavList = (ListView) findViewById(R.id.base_nav_list);
         flContainer = (FrameLayout) findViewById(R.id.base_container);
 
@@ -71,7 +72,8 @@ public class Base extends Activity {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
             Fragment fr = null;
-
+            Bundle args = new Bundle();
+            args.putString("EMAIL", email);
             if (i == 0) {                   // 가게정보
                 fr = new storeInfo();
 
@@ -85,7 +87,7 @@ public class Base extends Activity {
                fr = new notice();
 
             }
-
+            fr.setArguments(args);
             android.app.FragmentManager fm = getFragmentManager();
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.replace(R.id.base_container, fr);
