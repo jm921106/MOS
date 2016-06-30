@@ -31,7 +31,6 @@ public class MainActivity extends Activity {
         startActivity(new Intent(this, splash.class));
         setContentView(R.layout.mos_login);
 
-
         try {
             SQLiteDatabase db = dbManager.getWritableDatabase();
             dbManager.onUpgrade(db, 1, 2);
@@ -43,20 +42,6 @@ public class MainActivity extends Activity {
             dbManager.insert("INSERT INTO accountTBL VALUES('email5', 'pw1234', '황광희', 2);");
             dbManager.insert("INSERT INTO accountTBL VALUES('email6', 'pw1234', '정형돈', 2);");
             dbManager.insert("INSERT INTO accountTBL VALUES('email7', 'pw1234', '노홍철', 2);");
-
-            dbManager.insert("INSERT INTO accountTBL VALUES('email9', 'pw1234', '김종국', 2);");
-            dbManager.insert("INSERT INTO accountTBL VALUES('email10', 'pw1234', '송지효', 2);");
-            dbManager.insert("INSERT INTO accountTBL VALUES('email11', 'pw1234', '강개리', 2);");
-            dbManager.insert("INSERT INTO accountTBL VALUES('email12', 'pw1234', '이광수', 2);");
-            dbManager.insert("INSERT INTO accountTBL VALUES('email13', 'pw1234', '지석진', 2);");
-
-            dbManager.insert("INSERT INTO accountTBL VALUES('email14', 'pw1234', '양현석', 0);");
-
-            dbManager.insert("INSERT INTO accountTBL VALUES('email15', 'pw1234', 'GD', 2);");
-            dbManager.insert("INSERT INTO accountTBL VALUES('email16', 'pw1234', 'TOP', 2);");
-            dbManager.insert("INSERT INTO accountTBL VALUES('email17', 'pw1234', '태양', 2);");
-            dbManager.insert("INSERT INTO accountTBL VALUES('email18', 'pw1234', '대성', 2);");
-            dbManager.insert("INSERT INTO accountTBL VALUES('email19', 'pw1234', '승리', 2);");
 
             dbManager.insert("INSERT INTO storeTBL VALUES(0, '무한도전', '유재석', '111', 'MBC');");
             dbManager.insert("INSERT INTO staffTBL VALUES(0, 0, 'email1', '무한도전');");
