@@ -6,9 +6,13 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 /**
  * Created by SE JUNE on 2016-06-27.
@@ -19,7 +23,7 @@ public class newMessage extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mos_new_message);
 
-        final EditText edtToEmail = (EditText) findViewById(R.id.edtToEmail);
+        final Spinner spinnerToEmail = (Spinner) findViewById(R.id.spinnerToEmail);
         final EditText edtContent = (EditText) findViewById(R.id.edtContent);
         Button btnSend = (Button) findViewById(R.id.btnSend);
 
@@ -36,32 +40,37 @@ public class newMessage extends Activity {
         while(cursor.moveToNext()) {
             count++;
         }
+        cursor.close();
+
+        ArrayList<String> memberName = new ArrayList<>();
+        cursor = dbManager.select("SELECT * FROM staffTBL WHERE storeINDEX = "+ storeID +";");
+        while(cursor.moveToNext()) {
+            memberName.add(cursor.getString(2));
+        }
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_dropdown_item, memberName);
+        spinnerToEmail.setAdapter(adapter);
 
         final int messageINDEX = count;
 
+
+        //add btn
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!edtToEmail.getText().toString().equals("") && !edtContent.getText().toString().equals("")){
-                    String sql = "SELECT * FROM accountTBL WHERE EMAIL='" + edtToEmail.getText().toString() +"';";
-                    Cursor cursor1 = dbManager.select(sql);
-                    if(cursor1.getCount() != 0){
-                        dbManager.insert("INSERT INTO messageTBL VALUES("
-                                + messageINDEX +", " // Manager
-                                + storeID + ", '"
-                                + userEmail +"', '"
-                                + edtToEmail.getText().toString() +"', '"
-                                + edtContent.getText().toString() + "');");
+                if(edtContent.getText().toString().equals("")) {
+                    Toast.makeText(getApplicationContext(), "내용을 작성해 주세요.." , Toast.LENGTH_SHORT).show();
+                } else {
+                    dbManager.insert("INSERT INTO messageTBL VALUES("
+                            + messageINDEX +", " // Manager
+                            + storeID + ", '"
+                            + userEmail +"', '"
+                            + spinnerToEmail.getSelectedItem().toString() +"', '"
+                            + edtContent.getText().toString() + "');");
 
-                        edtToEmail.setBackgroundColor(Color.WHITE);
-                        Toast.makeText(getApplicationContext(), "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
-                        finish();
-                    }else{
-                        Toast.makeText(getApplicationContext(), "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
-                        edtToEmail.setBackgroundColor(Color.RED);
-                    }
-                }else{
-                    Toast.makeText(getApplicationContext(), "보내는 사람과 내용을 모두 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "메시지를 전달했습니다." , Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });
