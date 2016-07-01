@@ -78,7 +78,6 @@ public class message extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-
         myMessageList.clear();
         Cursor cursor = dbManager.select("SELECT * FROM messageTBL WHERE toEMAIL = '"+ userEmail +"';");
         while(cursor.moveToNext()) {
