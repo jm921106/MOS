@@ -36,20 +36,18 @@
             android:padding="10dp">
 
             <TextView
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="10dp"
+                android:layout_weight="2"
                 android:text="To"
                 android:textSize="25dp" />
 
-            <EditText
-                android:id="@+id/edtToEmail"
+            <Spinner
+                android:id="@+id/spinnerToEmail"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_marginRight="20dp"
-                android:layout_weight="1"
-                android:hint="Email" />
+                android:layout_height="wrap_content"
+                android:layout_weight="8"></Spinner>
+
         </LinearLayout>
 
         <LinearLayout

@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,6 +30,7 @@ public class selectStore extends Activity {
     Button selectStore_logOut;
     ImageView selectStore_add;
     ListView selectStore_list;
+    StoreListAdapter adapter = new StoreListAdapter();
 
     final dataBase dbManager = new dataBase(this);
 
@@ -37,42 +39,53 @@ public class selectStore extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mos_select_store);
 
-        selectStore_logOut = (Button) findViewById(R.id.selectStore_logOut);
-        selectStore_add = (ImageView) findViewById(R.id.selectStore_add);
-        selectStore_list = (ListView) findViewById(R.id.selectStore_list);
-
         //로그인에서 데이터 전달
         Intent intent = getIntent();
         final String userEmail = intent.getStringExtra("EMAIL");
         final int userType = intent.getIntExtra("TYPE", 2);
         final String name = intent.getStringExtra("NAME");
 
-        selectStore_logOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
+        selectStore_logOut = (Button) findViewById(R.id.selectStore_logOut);
+        selectStore_add = (ImageView) findViewById(R.id.selectStore_add);
+        selectStore_list = (ListView) findViewById(R.id.selectStore_list);
+        selectStore_list.setAdapter(adapter);
 
-        final ArrayList<String> storeNameList = new ArrayList<String>();
-        final ArrayList<Integer> storeIndexList = new ArrayList<Integer>();
-        Cursor cursor = dbManager.select("SELECT * FROM staffTBL WHERE staffEMAIL = '" + userEmail + "';");
+//        adapter.addItem(ContextCompat.getDrawable(this, R.drawable.photo),
+//                "exName", "exTel", "exAddr");
 
+        Cursor cursor = dbManager.select("SELECT * FROM staffTBL WHERE staffEmail = '" + userEmail + "';");
+        final ArrayList<Integer> storeIDList = new ArrayList<>();
         while (cursor.moveToNext()) {
-            storeNameList.add(cursor.getString(3));
-            storeIndexList.add(cursor.getInt(1));
+            storeIDList.add(cursor.getInt(1));
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, storeNameList);
-        selectStore_list.setAdapter(adapter);
-        adapter.notifyDataSetChanged();
+        cursor.close();
+
+        final ArrayList<String> storeNameList = new ArrayList<>();
+        ArrayList<String> storeTelList = new ArrayList<>();
+        ArrayList<String> storeAddrList = new ArrayList<>();
+        String test = "";
+
+        for (int i = 0; i < storeIDList.size(); i++) {
+            cursor = dbManager.select("SELECT * FROM storeTBL WHERE storeINDEX = '" + storeIDList.get(i) + "';");
+
+            while (cursor.moveToNext()) {
+                storeNameList.add(cursor.getString(1));
+                storeTelList.add(cursor.getString(3));
+                storeAddrList.add(cursor.getString(4));
+                adapter.addItem(ContextCompat.getDrawable(this, R.drawable.photo),
+                        cursor.getString(1), cursor.getString(3), cursor.getString(4));
+            }
+            cursor.close();
+        }
+
 
         selectStore_list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                int storeID = storeIndexList.get(i);
+                int storeID = storeIDList.get(i);
                 String storeName = storeNameList.get(i);
+
                 Intent intent = new Intent(getApplicationContext(), Base.class);
                 intent.putExtra("EMAIL", userEmail);
                 intent.putExtra("UserType", userType);
@@ -112,6 +125,13 @@ public class selectStore extends Activity {
                 Intent intent = new Intent(getApplicationContext(), newStore.class);
                 intent.putExtra("EMAIL", userEmail);
                 startActivity(intent);
+            }
+        });
+
+        selectStore_logOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
             }
         });
 
