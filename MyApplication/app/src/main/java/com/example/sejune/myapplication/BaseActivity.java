@@ -88,6 +88,11 @@ public class BaseActivity extends Activity {
         frag3 = new Fragment_3();
         frag3.setArguments(args);
 
+        manager = (FragmentManager) getFragmentManager();
+        FragmentTransaction fragmentTransaction2 = manager.beginTransaction();
+        fragmentTransaction2.add(R.id.container, frag1);
+        fragmentTransaction2.commit();
+
 
         lvNavList = (ListView) findViewById(R.id.base_nav_list);
         flContainer = (FrameLayout) findViewById(R.id.base_container);

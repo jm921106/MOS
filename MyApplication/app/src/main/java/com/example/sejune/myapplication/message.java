@@ -81,6 +81,7 @@ public class message extends Fragment {
         myMessageList.clear();
         Cursor cursor = dbManager.select("SELECT * FROM messageTBL WHERE toEMAIL = '"+ userEmail +"';");
         while(cursor.moveToNext()) {
+
             String str = "from : " + cursor.getString(2) + "\n contents : " + cursor.getString(4);
             myMessageList.add(str);
         }

@@ -8,6 +8,6 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="fragment_3" />
+        android:text="기능 미정 (추후 결정)" />
 
 </LinearLayout>
