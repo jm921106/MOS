@@ -3,6 +3,7 @@ package com.example.sejune.myapplication;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -41,16 +42,27 @@ public class newMessage extends Activity {
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbManager.insert("INSERT INTO messageTBL VALUES("
-                        + messageINDEX +", " // Manager
-                        + storeID + ", '"
-                        + userEmail +"', '"
-                        + edtToEmail.getText().toString() +"', '"
-                        + edtContent.getText().toString() + "');");
+                if(!edtToEmail.getText().toString().equals("") && !edtContent.getText().toString().equals("")){
+                    String sql = "SELECT * FROM accountTBL WHERE EMAIL='" + edtToEmail.getText().toString() +"';";
+                    Cursor cursor1 = dbManager.select(sql);
+                    if(cursor1.getCount() != 0){
+                        dbManager.insert("INSERT INTO messageTBL VALUES("
+                                + messageINDEX +", " // Manager
+                                + storeID + ", '"
+                                + userEmail +"', '"
+                                + edtToEmail.getText().toString() +"', '"
+                                + edtContent.getText().toString() + "');");
 
-                Toast.makeText(getApplicationContext(), "insert ok", Toast.LENGTH_SHORT).show();
-
-                finish();
+                        edtToEmail.setBackgroundColor(Color.WHITE);
+                        Toast.makeText(getApplicationContext(), "메시지를 전송하였습니다.", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }else{
+                        Toast.makeText(getApplicationContext(), "아이디가 존재하지 않습니다.", Toast.LENGTH_SHORT).show();
+                        edtToEmail.setBackgroundColor(Color.RED);
+                    }
+                }else{
+                    Toast.makeText(getApplicationContext(), "보내는 사람과 내용을 모두 입력해 주세요.", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

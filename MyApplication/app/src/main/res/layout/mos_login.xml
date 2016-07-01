@@ -24,6 +24,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:singleLine="true"
             android:hint="email"
             android:padding="10dp" />
 
@@ -33,6 +34,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
+            android:singleLine="true"
             android:hint="pwd"
             android:padding="10dp" />
 

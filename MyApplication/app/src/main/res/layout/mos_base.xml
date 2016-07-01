@@ -5,12 +5,13 @@
     android:id="@+id/base_drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Base">
+    tools:context=".BaseActivity">
 
     <FrameLayout
         android:id="@+id/base_container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+
         android:background="#005757">
     </FrameLayout>
 

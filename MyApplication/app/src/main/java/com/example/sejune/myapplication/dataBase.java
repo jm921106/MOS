@@ -30,7 +30,7 @@ public class dataBase extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(sql);
 
         //스케쥴 테이블 생성
-        sql = "CREATE TABLE scheduleTBL (scheduleDATE TEXT PRIMARY KEY, scheduleTEXT TEXT, EMAIL CHAR(20), name CHAR(20));";
+        sql = "CREATE TABLE scheduleTBL (scheduleINDEX INTEGER  PRIMARY KEY, scheduleDATE TEXT, scheduleTEXT TEXT, EMAIL CHAR(20), name CHAR(20));";
         sqLiteDatabase.execSQL(sql);
 
         //메세지 테이블 생성

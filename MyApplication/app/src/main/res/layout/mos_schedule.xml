@@ -12,10 +12,12 @@
         android:background="#FFFFFF"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="임시 버튼" />
+        <ImageView
+            android:id="@+id/schedule_menu"
+            android:layout_width="50sp"
+            android:layout_height="50sp"
+            android:onClick="mOnClick"
+            android:src="@drawable/ic_drawer" />
 
         <ImageView
             android:layout_width="0dp"
@@ -42,10 +44,11 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:background="#fff000"
+        android:background="#333333"
         android:gravity="center"
         android:text="notice! (좌우 scroll / 자동변경)"
         android:textColor="#ff0000"
+        android:textAllCaps="true"
         android:textSize="20dp" />
 
     <CalendarView

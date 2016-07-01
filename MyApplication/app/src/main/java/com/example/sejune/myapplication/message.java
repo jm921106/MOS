@@ -16,26 +16,30 @@ package com.example.sejune.myapplication;
 
 /**
  * Created by SE JUNE on 2016-06-28.
+ *
+ * 출력할때 거꾸로 하기.
  */
 public class message extends Fragment {
+    dataBase dbManager;
+    ArrayList<String> myMessageList;
+    ArrayAdapter<String> adapter;
 
-
+    String userEmail;
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-
         View view = inflater.inflate(R.layout.mos_message, container, false);
-        final dataBase dbManager = new dataBase(view.getContext());
+//        final dataBase dbManager = new dataBase(view.getContext());
+        dbManager = new dataBase(view.getContext());
 
         ListView listMessage = (ListView) view.findViewById(R.id.listMessage);
         Button btnMessageAdd = (Button) view.findViewById(R.id.btnMessageAdd);
-
         Bundle args = getArguments();
-        final String userEmail = args.getString("EMAIL");
+        userEmail = args.getString("EMAIL");
         final String storeName = args.getString("StoreName");
         final int userType = args.getInt("UserType");
         final int storeID = args.getInt("StoreID");
 
-        ArrayList<String> myMessageList = new ArrayList<String>();
+        //ArrayList<String> myMessageList = new ArrayList<String>();
+        myMessageList = new ArrayList<String>();
 
         Cursor cursor = dbManager.select("SELECT * FROM messageTBL WHERE toEMAIL = '"+ userEmail +"';");
         while(cursor.moveToNext()) {
@@ -43,12 +47,15 @@ public class message extends Fragment {
             myMessageList.add(str);
         }
 
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+        adapter = new ArrayAdapter<String>(
                 view.getContext(),
                 android.R.layout.simple_list_item_1, myMessageList);
         listMessage.setAdapter(adapter);
+
 //        listMessage.notifyAll();
 //        adapter.notifyAll();
+
+        //stMessage.setLongClickable(new On);
 
         btnMessageAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,5 +73,18 @@ public class message extends Fragment {
         });
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        myMessageList.clear();
+        Cursor cursor = dbManager.select("SELECT * FROM messageTBL WHERE toEMAIL = '"+ userEmail +"';");
+        while(cursor.moveToNext()) {
+            String str = "from : " + cursor.getString(2) + "\n contents : " + cursor.getString(4);
+            myMessageList.add(str);
+        }
+        adapter.notifyDataSetChanged();
     }
 }

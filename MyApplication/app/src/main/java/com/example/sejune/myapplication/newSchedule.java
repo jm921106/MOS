@@ -2,6 +2,7 @@ package com.example.sejune.myapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
@@ -49,8 +50,16 @@ public class newSchedule extends Activity {
                 }else{
                     //입력을 받음.
                     dataBase db = new dataBase(getApplicationContext());       //디비 변수
+                    int count = 0;
+
                     sqlDB = db.getWritableDatabase();
-                    String sql = "INSERT INTO scheduleTBL VALUES( '"
+                    Cursor cursor = db.select("SELECT * FROM scheduleTBL WHERE scheduleDATE='" + date +"';");
+                    while(cursor.moveToNext()){
+                        count++;
+                    }
+
+                    String sql = "INSERT INTO scheduleTBL VALUES( "
+                            + count + ", '"
                             + date +"', '"
                             + newSchedule_text.getText().toString() + "', '"
                             + email + "', '"

@@ -2,4 +2,6 @@
     <string name="app_name">My Application</string>
     <string name="newID"><u>New Account</u>.</string>
     <string name="forgetPW"><u>Forget Password</u>.</string>
+    <string name="open_drawer">Menu</string>
+    <string name="close_drawer">Menu</string>
 </resources>

@@ -5,25 +5,34 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 /**
  * Created by SE JUNE on 2016-06-28.
  */
-public class Base extends Activity {
+public class BaseActivity extends Activity {
     String[] menues = {"Store INFO", "SCHEDULE", "MESSAGE", "NOTICE"};
     ListView lvNavList;
     FrameLayout flContainer;
+    DrawerLayout drawerLayout;
+    ActionBarDrawerToggle dtToggle;
 
     FragmentManager manager;  //Fragment를 관리하는 클래스의 참조변수
     FragmentTransaction tran;  //실제로 Fragment를 추가/삭제/재배치 하는 클래스의 참조변수
     Fragment frag1, frag2, frag3; //3개의 Fragment 참조변수
+    ImageView btn_Menu;
 
     Bundle args = new Bundle();
     String storeName, email, name;
@@ -33,6 +42,24 @@ public class Base extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.mos_base);
+
+        //리스트에 대한 부분.
+        drawerLayout = (DrawerLayout) findViewById(R.id.base_drawer);
+        dtToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.open_drawer, R.string.close_drawer) {
+            @Override
+            public void onDrawerClosed(View drawerView) {
+                super.onDrawerClosed(drawerView);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+            }
+        };
+
+        drawerLayout.setDrawerListener(dtToggle);
+        dtToggle.setHomeAsUpIndicator(R.drawable.ic_drawer);
+        //getActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
 
@@ -48,7 +75,11 @@ public class Base extends Activity {
         args.putString("StoreName", storeName);
         args.putString("NAME", name);
 
+        Fragment fragment = new storeInfo();
         manager = (FragmentManager) getFragmentManager();
+        FragmentTransaction fragmentTransaction = manager.beginTransaction();
+        fragmentTransaction.add(R.id.base_container, fragment);
+        fragmentTransaction.commit();
 
         frag1 = new Fragment_1();
         frag1.setArguments(args);
@@ -89,6 +120,7 @@ public class Base extends Activity {
             FragmentTransaction fragmentTransaction = fm.beginTransaction();
             fragmentTransaction.replace(R.id.base_container, fr);
             fragmentTransaction.commit();
+            drawerLayout.closeDrawer(lvNavList);
         }
     }
 
@@ -118,6 +150,40 @@ public class Base extends Activity {
                 tran.replace(R.id.container, frag3);
                 tran.commit();
                 break;
+            case R.id.btnMenu:
+                drawerLayout.openDrawer(lvNavList);
+                break;
+            case R.id.schedule_menu:
+                drawerLayout.openDrawer(lvNavList);
+                break;
+            case R.id.message_menu:
+                drawerLayout.openDrawer(lvNavList);
+                break;
+            case R.id.notice_menu:
+                drawerLayout.openDrawer(lvNavList);
+                ;
+                break;
         }
+
+    }
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        dtToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        dtToggle.onConfigurationChanged(newConfig);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (dtToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

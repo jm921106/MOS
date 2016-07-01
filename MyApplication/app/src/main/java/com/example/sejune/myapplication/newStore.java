@@ -116,8 +116,6 @@ public class newStore extends Activity {
                                         selectStore.selectStore_list.setAdapter(adapter);
                                         adapter.notifyDataSetChanged();
                      */
-
-
                             finish();
                         }else{
                             Toast.makeText(getApplicationContext(), "유효한 계정이 아닙니다.", Toast.LENGTH_SHORT).show();

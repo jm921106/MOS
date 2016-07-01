@@ -13,7 +13,7 @@
         <activity android:name=".forgetPW"></activity>
         <activity android:name=".selectStore"></activity>
         <activity android:name=".newStore"></activity>
-        <activity android:name=".Base"></activity>
+        <activity android:name=".BaseActivity"></activity>
         <activity android:name=".newSchedule"></activity>
         <activity android:name=".newNotice"></activity>
         <activity android:name=".newMessage"></activity>
